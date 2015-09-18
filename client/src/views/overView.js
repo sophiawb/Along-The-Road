@@ -233,6 +233,10 @@ var overView = React.createClass({
 
     var count = wayPoints.length;
     
+    if(wayPoints.length !== 20) {
+      $('#loadMore').remove();
+    }
+
     for(var i=0; i<wayPoints.length; i++){
       var point = wayPoints[i]; 
       var ll = "&ll=" + point.lat()+"," + point.lng();
@@ -273,7 +277,6 @@ var overView = React.createClass({
           console.log("TEST -------> fourSquare error, error=", error);
         }
       }); //ajax()
-
     }; //for()
   }, // getFourSquare()
 
@@ -321,8 +324,8 @@ var overView = React.createClass({
               /> {/* RouteDetailView */}
             </div> {/* row */}
 
-            <div className='row load-more-container'>
-              <RaisedButton
+            <div id="loadMore" className='row load-more-container'>
+              <RaisedButton 
                 label="Load More"
                 className="submit_button"
                 secondary={true}
