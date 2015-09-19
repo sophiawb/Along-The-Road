@@ -86,8 +86,8 @@ var HomeView = React.createClass({
 
     return (
       <div className='container-fluid'>
-        <br/><br/>
-        <div className = 'row centered'>
+        <div className = 'row centered input-container'>
+          <div className='subtitle'> Where are you headed? </div>
           <div className="input-group">
             <input className="start-location form-control" id="origin" placeholder="Starting Location" />
           </div> {/*input-group*/}
