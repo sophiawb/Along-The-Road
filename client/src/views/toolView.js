@@ -40,12 +40,12 @@ var ToolView = React.createClass({
     }
   },
 
-  /* function: componentDidMount 
+  /* function: componentDidMount
    * ---------------------------
    * This function sets an event listener on the searchbar. It checks for if
    * the searchbar is empty and then clears the search filter or otherwise
    * waits for the enter key to be hit to apply it through the searchVenues
-   * and updatList actions. 
+   * and updatList actions.
    */
   componentDidMount() {
     $("#searchBar").keyup(function(e){
@@ -82,7 +82,7 @@ var ToolView = React.createClass({
             onChange = {this.updateFilters}
             value = {this.state.filters}
             multiple = {true}
-        >{/* SelectBox */}
+        >
           <option value='price1'> $ </option>
           <option value='price2'> $$ </option>
           <option value='price3'> $$$+ </option>
