@@ -64,7 +64,7 @@ var overView = React.createClass({
       limit_url: "&limit=20", // how many venues to return per waypoint
       photos_url: "&venuePhotos=1",
       category_url: "&section=food",
-      distance_url: "&sortByDistance=0"  
+      distance_url: "&sortByDistance=0"
     }
   },
 
@@ -78,7 +78,7 @@ var overView = React.createClass({
     var start = MapHelpers.getLatLong(origin);
     var end = MapHelpers.getLatLong(destination);
     var map = MapHelpers.initializeMap(start);
-    window.map = map; 
+    window.map = map;
 
     /****** CREATE START/END MARKERS *******/
     MapHelpers.initializeMarkers(start, end, map);
@@ -89,7 +89,7 @@ var overView = React.createClass({
     /****** FLUX:  ******/
     RouteStore.addChangeListener(this.onStoreChange); //update routes
 
-    /****** BEGIN APP INITIALIZATION *****/ 
+    /****** BEGIN APP INITIALIZATION *****/
     this.getRoutes(start, end, map);
 
   }, //componentDidMount()
@@ -103,25 +103,25 @@ var overView = React.createClass({
   },
 
   onStoreChange (){
-      
+
       // console.log("RouteStore addChangeListener() **********************");
       var routes = RouteStore.getRoutes();
       var currentRoute = RouteStore.getCurrentRoute();
       var filteredVenues = currentRoute.filteredVenues;
-      
+
       //The only place we are going to set state
       this.setState({
-        routes, 
+        routes,
         currentRoute,
       });
-  }, 
+  },
 
 
   /* function: getRoutes
    * --------------------------------
    * This function finds the three fastest routes back by querying the google maps api
-   * It then creates an object with all the desired data from the query as well as 
-   * placeholders for data to later be added. 
+   * It then creates an object with all the desired data from the query as well as
+   * placeholders for data to later be added.
   */
   getRoutes (start, end, map) {
     var directionsService = new google.maps.DirectionsService();
@@ -133,7 +133,7 @@ var overView = React.createClass({
       travelMode: google.maps.TravelMode.DRIVING,
       provideRouteAlternatives: true,
     }; //request
-    
+
     // func: Asynchronously gets routes from google
     directionsService.route(request, function (response, status) {
       if (status == google.maps.DirectionsStatus.OK) { //.OK indicates the response contains a valid DirectionsResult.
@@ -160,7 +160,7 @@ var overView = React.createClass({
 
           // derived properties
           newRoute.index = i; //tracks position in routes array
-          newRoute.allVenuesObj = {}; //all venues found 
+          newRoute.allVenuesObj = {}; //all venues found
           newRoute.allVenuesArray = [];
           newRoute.filteredVenues = newRoute.allVenuesArray; //processed (filtered OR sorted) venues to be displayed
           newRoute.queryIndex = 1; //where we begin with queries, defaults to 0
@@ -175,13 +175,13 @@ var overView = React.createClass({
           });
 
           newRoutes.push(newRoute); // save routes in array
-          
-          
+
+
 
         }); //for(routes)
-        
+
         Actions.initRoutes(newRoutes);
-        
+
         component.changeCurrentRoute(RouteStore.getCurrentRoute()); //load the first route
       } // if(success)
     }); //directionsService.route callback
@@ -192,7 +192,7 @@ var overView = React.createClass({
 
   /* function: loadMore
    * --------------------------------
-   * This function loads the next 20 queries on the currently selected route 
+   * This function loads the next 20 queries on the currently selected route
    * It does this by invoking the getFourSquare function for the next 20 waypoints
   */
   loadMore (newRoute) {
@@ -206,9 +206,9 @@ var overView = React.createClass({
 
   /* function: changeCurrentRoute
    * --------------------------------
-   * This function takes in the new route and updates it on the map as well as 
-   * triggering the action to select the route in the routeStore. It then 
-   * checks if the venues have been queried for that route and adds more if yes. 
+   * This function takes in the new route and updates it on the map as well as
+   * triggering the action to select the route in the routeStore. It then
+   * checks if the venues have been queried for that route and adds more if yes.
   */
   changeCurrentRoute (newRoute) {
     /******** UPDATE POLYLINES *********/
@@ -236,7 +236,7 @@ var overView = React.createClass({
   getFourSquare (wayPoints, queryIndex) {
 
     var count = wayPoints.length;
-    
+
     if(wayPoints.length === QueriesPerLoad) {
       $('#loadMore').show();
     }
@@ -247,7 +247,7 @@ var overView = React.createClass({
     // MapHelpers.updateZoom(wayPoints, window.map)
 
     for(var i=0; i<wayPoints.length; i++){
-      var point = wayPoints[i]; 
+      var point = wayPoints[i];
       var ll = "&ll=" + point.lat()+"," + point.lng();
 
       var radius_url = "&radius=" + this.state.currentRoute.searchRadius * 1000;
@@ -266,7 +266,7 @@ var overView = React.createClass({
           var venue_wrappers = data.response.groups[0].items; //extract venues array from data
           Actions.addVenues(venue_wrappers, point);
           //This is just to show the user something is loading
-          if(queryIndex === 1 && count ===  wayPoints.length-1) { 
+          if(queryIndex === 1 && count ===  wayPoints.length-1) {
             Actions.sortVenues();
             Actions.updateList();
           }
@@ -276,7 +276,7 @@ var overView = React.createClass({
             Actions.sortVenues();
             Actions.updateList();
           }
-        }.bind(point), 
+        }.bind(point),
         error: function(error){
           count--;
           if(count === 0 ){
@@ -293,7 +293,7 @@ var overView = React.createClass({
   render () {
     var that = this;
     return (
-      <div className = 'container-fluid' style = {{'height': '100%'}} >
+      <div className = 'container-fluid background-white' style = {{'height': '100%'}} >
         <div className = 'row' style={{'height': '100%', 'width': '100%'}}>
           <div className = 'col-sm-5 left-container'>
 
@@ -319,8 +319,8 @@ var overView = React.createClass({
 
           <div id="right-container" className='col-sm-7 right-container'>
             <div className='row map-container'>
-              <MapView 
-                currentRoute={this.state.currentRoute} 
+              <MapView
+                currentRoute={this.state.currentRoute}
                 origin = {this.state.origin}
 
               /> {/* MapView */}
@@ -334,7 +334,7 @@ var overView = React.createClass({
             </div> {/* row */}
 
             <div id="loadMore" className='row load-more-container'>
-              <RaisedButton 
+              <RaisedButton
                 label="Load More"
                 className="submit_button"
                 secondary={true}

@@ -127,7 +127,7 @@ var MapView = React.createClass({
           if(venue.price.tier===2) priceStr ="$$";
           if(venue.price.tier===3) priceStr ="$$$";
           if(venue.price.tier===4) priceStr ="$$$$";
-          
+
         }
 
         var position = new google.maps.LatLng(lat, lng);
@@ -201,18 +201,18 @@ var MapView = React.createClass({
 
         // create event listener to close info window
         google.maps.event.addListener(marker, 'click', function() {
-          if(markerIsActive){ // deactivate this marker 
-            markerIsActive = false; 
-            infowindow.close(); 
+          if(markerIsActive){ // deactivate this marker
+            markerIsActive = false;
+            infowindow.close();
 
           }else if(!markerIsActive){ //activate this marker
-            markerIsActive = true; 
+            markerIsActive = true;
             if(window.activeInfoWindow){
               window.activeInfoWindow.close(); //close previous
             }
             console.log(marker.id);
             Actions.selectMapMarker(marker.id);
-            window.activeInfoWindow = infowindow; //update current;  
+            window.activeInfoWindow = infowindow; //update current;
           } //if
         }); //mouseout
 
@@ -236,7 +236,7 @@ var MapView = React.createClass({
   clearMapMarkers (){
 
     var markers = this.state.markers;
-    
+
     for(var key in markers){
       var marker = markers[key];
       marker.setMap(null);
